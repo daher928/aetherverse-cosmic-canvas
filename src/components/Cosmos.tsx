@@ -1,19 +1,21 @@
 
 import * as THREE from 'three'
-import { useRef, useMemo } from 'react'
+import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Stars, Sphere } from '@react-three/drei'
 import { useIsMobile } from '@/hooks/use-mobile'
 
-function Planet({ position, color, size, speed, offset }) {
+function Planet({ orbitRadius, color, size, speed, offset }: { orbitRadius: number; color: string; size: number; speed: number; offset: number; }) {
   const ref = useRef<THREE.Mesh>(null!)
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime() * speed + offset
-    ref.current.position.x = position[0] + Math.cos(t) * 3
-    ref.current.position.y = position[1] + Math.sin(t) * 3
+    if (ref.current) {
+      ref.current.position.x = Math.cos(t) * orbitRadius
+      ref.current.position.y = Math.sin(t) * orbitRadius
+    }
   })
   return (
-    <Sphere ref={ref} args={[size, 32, 32]} position={position}>
+    <Sphere ref={ref} args={[size, 32, 32]}>
       <meshStandardMaterial color={color} roughness={0.7} />
     </Sphere>
   )
@@ -32,9 +34,9 @@ export function Cosmos() {
       </Sphere>
 
       {/* Orbiting Planets */}
-      <Planet position={[0, 0, 0]} color="#00ffff" size={0.2} speed={0.5} offset={0} />
-      <Planet position={[0, 0, 0]} color="#ff4500" size={0.15} speed={0.3} offset={2} />
-      <Planet position={[0, 0, 0]} color="#ffffff" size={0.1} speed={0.8} offset={4} />
+      <Planet orbitRadius={3} color="#00ffff" size={0.2} speed={0.5} offset={0} />
+      <Planet orbitRadius={4.5} color="#ff4500" size={0.15} speed={0.3} offset={2} />
+      <Planet orbitRadius={6} color="#ffffff" size={0.1} speed={0.8} offset={4} />
 
       {/* Distant Stars/Particles */}
       <Stars radius={100} depth={50} count={particleCount} factor={4} saturation={0} fade speed={1} />
