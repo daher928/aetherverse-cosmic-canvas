@@ -24,7 +24,7 @@ const Index = () => {
         </h1>
         <p className="mt-4 text-lg md:text-2xl text-gray-300">Your 3D corner of the cosmos.</p>
         <Link to="/create" className="mt-8">
-          <button className="holographic-button">
+          <button className="holographic-button group">
             <span className="holographic-button-inner font-orbitron">
               Create Your Cosmos
             </span>
