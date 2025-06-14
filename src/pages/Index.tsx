@@ -8,7 +8,7 @@ const Index = () => {
   return (
     <div className="relative w-full h-screen overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full">
-        <Canvas camera={{ position: [0, 0, 10], fov: 75 }}>
+        <Canvas camera={{ position: [0, 0, 10] }}>
           <ambientLight intensity={0.2} />
           <Suspense fallback={null}>
             <Cosmos />
