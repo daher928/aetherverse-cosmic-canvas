@@ -1,4 +1,3 @@
-
 import * as THREE from 'three'
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
@@ -6,18 +5,20 @@ import { Stars, Sphere } from '@react-three/drei'
 import { useIsMobile } from '@/hooks/use-mobile'
 
 function Planet({ orbitRadius, color, size, speed, offset }: { orbitRadius: number; color: string; size: number; speed: number; offset: number; }) {
-  const ref = useRef<THREE.Mesh>(null!)
+  const groupRef = useRef<THREE.Group>(null!)
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime() * speed + offset
-    if (ref.current) {
-      ref.current.position.x = Math.cos(t) * orbitRadius
-      ref.current.position.y = Math.sin(t) * orbitRadius
+    if (groupRef.current) {
+      groupRef.current.position.x = Math.cos(t) * orbitRadius
+      groupRef.current.position.y = Math.sin(t) * orbitRadius
     }
   })
   return (
-    <Sphere ref={ref} args={[size, 32, 32]}>
-      <meshStandardMaterial color={color} roughness={0.7} />
-    </Sphere>
+    <group ref={groupRef}>
+      <Sphere args={[size, 32, 32]}>
+        <meshStandardMaterial color={color} roughness={0.7} />
+      </Sphere>
+    </group>
   )
 }
 
