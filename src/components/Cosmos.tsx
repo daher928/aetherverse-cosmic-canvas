@@ -1,3 +1,4 @@
+
 import * as THREE from 'three'
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
@@ -10,33 +11,25 @@ function Planet({ orbitRadius, color, size, speed, offset }: { orbitRadius: numb
     const t = clock.getElapsedTime() * speed + offset
     if (groupRef.current) {
       groupRef.current.position.x = Math.cos(t) * orbitRadius
-      groupRef.current.position.y = Math.sin(t) * orbitRadius
+      groupRef.current.position.z = Math.sin(t) * orbitRadius
     }
   })
   return (
     <group ref={groupRef}>
       <Sphere args={[size, 32, 32]}>
-        <meshStandardMaterial color={color} roughness={0.7} />
+        <meshStandardMaterial color={color} roughness={0.7} emissive={color} emissiveIntensity={2} />
       </Sphere>
     </group>
   )
 }
 
 export function Cosmos() {
-  // For debugging, we are returning a very simple scene.
-  // If this renders, the issue is in one of the commented out components.
-  return (
-    <Sphere args={[1, 32, 32]}>
-      <meshBasicMaterial color="hotpink" attach="material" />
-    </Sphere>
-  )
-  /*
     const isMobile = useIsMobile()
     const particleCount = isMobile ? 2500 : 5000;
 
     return (
       <>
-        <pointLight color="#f0f" intensity={150} distance={100} position={[0, 0, 0]} />
+        <pointLight color="#f0f" intensity={250} distance={100} position={[0, 0, 0]} />
         <Sphere args={[0.5, 32, 32]}>
           <meshBasicMaterial color="#f0f" toneMapped={false} />
         </Sphere>
@@ -48,5 +41,4 @@ export function Cosmos() {
         <Stars radius={100} depth={50} count={particleCount} factor={4} saturation={0} fade speed={1} />
       </>
     )
-    */
 }
